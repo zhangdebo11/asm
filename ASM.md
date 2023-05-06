@@ -1,8 +1,3 @@
-# 安装ASM
-
-集群要开启 VPC-native traffic routing
-集群的feature打开“Anthos service mesh”
-
 # 部署入口网关
 
 准备示例代码
@@ -56,29 +51,3 @@ kubectl apply -f samples/online-boutique/kubernetes-manifests/services
 
 # 通过ingressgateway访问示例应用
 https://test-asm-boutique.raicart.io
-
-# 卸载ASM
-
-## 取消sidecar注入
-
-```sh
-kubectl label namespace YOUR_NAMESPACE istio.io/rev-
-kubectl label namespace YOUR_NAMESPACE istio-injection-
-```
-重启pod后sidecar消失
-
-## 移除hook
-
-kubectl delete validatingwebhookconfiguration istiod-istio-system-mcp
-kubectl delete mutatingwebhookconfiguration RELEASE_CHANNEL
-
-## 删除相关命名空间
-kubectl delete namespace istio-system asm-system --ignore-not-found=true
-
-## 删除相关CRD
-kubectl get crd  | grep istio
-
-## 取消fleet注册
-gcloud container fleet memberships unregister staging-manju-melonpan-cluster \
-   --project=smartcart-stagingization \
-   --gke-cluster=asia-northeast1/staging-manju-melonpan-cluster

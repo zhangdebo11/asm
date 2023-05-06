@@ -26,4 +26,6 @@ metadata:
 
 # 为应用开启ASM
 
-# 如何卸载ASM
+# 如何为集群卸载ASM
+
+[uninstall.md](uninstall.md)
