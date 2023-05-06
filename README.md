@@ -36,9 +36,9 @@ metadata:
 
 # 其他
 
-- [为什么要修改ASM配置](./problem.md)
-- [为集群卸载ASM](./uninstall.md)
-- [ASM记录访问日志](./access-log.md)
-- [APE集群升级ASM](./APE-ASM-upgrade.md)
-- [限流](./rate-limit.md)
-- [Ingress Gateway](./ingressgateway.md)
+- [为什么要修改ASM配置](./docs/problem.md)
+- [为集群卸载ASM](./docs/uninstall.md)
+- [ASM记录访问日志](./docs/access-log.md)
+- [APE集群升级ASM](./docs/APE-ASM-upgrade.md)
+- [限流](./docs/rate-limit.md)
+- [Ingress Gateway](./docs/ingressgateway.md)

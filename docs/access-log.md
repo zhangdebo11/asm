@@ -2,24 +2,11 @@
 
 # 方法一
 
-为特定服务开启访问日志
+## 设置日志格式
 
-```yaml
-apiVersion: telemetry.istio.io/v1alpha1
-kind: Telemetry
-metadata:
-  name: test-asmlog
-  namespace: default
-spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: monaka
-  accessLogging:
-    - providers:
-      - name: envoy
-```
+可选步骤，有默认格式
 
-设置日志格式
+kubectl -n istio-system edit cm istio-asm-managed
 
 ```yaml
 apiVersion: v1
@@ -36,6 +23,25 @@ metadata:
 
 ```
 
+## 为特定服务开启访问日志
+
+```yaml
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: test-asmlog
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: monaka  # pod选择器
+  accessLogging:
+    - providers:
+      - name: envoy
+```
+
+
+
 # 方法二
 
 使用lua脚本
@@ -50,7 +56,6 @@ spec:
   configPatches:
     - applyTo: HTTP_FILTER
       match:
-        # context: GATEWAY
         context: SIDECAR_INBOUND
         listener:
           filterChain:
@@ -76,9 +81,13 @@ spec:
               end
   workloadSelector:
     labels:
-      app.kubernetes.io/name: macaron
-    #   app: test-nginx1
+      app.kubernetes.io/name: macaron  # pod选择器
 
 ```
 
-这个方法存在问题：logCritical日志级别太高，改成其他级别则无法输出，没有找到修改日志级别的方法
+# 参考资料
+
+- https://istio.io/latest/docs/tasks/observability/logs/access-log/
+- https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#
+- https://dev.to/aws-builders/understanding-istio-access-logs-2k5o
+- https://github.com/envoyproxy/envoy/issues/11592
