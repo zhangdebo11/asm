@@ -22,8 +22,6 @@ metadata:
   namespace: istio-system
 ```
 
-关于为什么要修改配置，请参考 [problem.md](problem.md)
-
 # 为应用开启ASM
 
 ## 为一个namespace开启
@@ -36,6 +34,11 @@ metadata:
 
 相反，如果namespace关闭了注入，但是namespace下的某个应用需要开启注入，可以为pod设置label  `sidecar.istio.io/inject="true"` 。
 
-# 如何为集群卸载ASM
+# 其他
 
-[uninstall.md](uninstall.md)
+- [为什么要修改ASM配置](./problem.md)
+- [为集群卸载ASM](./uninstall.md)
+- [ASM记录访问日志](./access-log.md)
+- [APE集群升级ASM](./APE-ASM-upgrade.md)
+- [限流](./rate-limit.md)
+- [Ingress Gateway](./ingressgateway.md)

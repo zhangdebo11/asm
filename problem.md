@@ -17,10 +17,6 @@ metadata:
   namespace: istio-system
 ```
 
-# 在 melonpan 页面访问 monaka 文档失败
-原因是，monaka会判断请求的referer的值。melonpan发送给monaka的referer值是 "xxx.com"格式，缺少协议信息，被istio认为无效并且删除了。
-修改办法就是melonpan发送referer的值改为"http://xxx.com"格式
-
 # melonpan显示的客户端IP全都是127.0.0.6
 melonpan 无法获取到客户端的 IP
 
@@ -45,3 +41,7 @@ metadata:
 其他可选的配置可以参照文章 https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/
 
 cm修改完成后，重建业务pod重新注入sidecar。
+
+# 在 melonpan 页面访问 monaka 文档失败
+原因是，monaka会判断请求的referer的值。melonpan发送给monaka的referer值是 "xxx.com"格式，缺少协议信息，被istio认为无效并且删除了。
+修改办法就是melonpan发送referer的值改为"http://xxx.com"格式
