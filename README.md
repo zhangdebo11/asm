@@ -32,9 +32,7 @@ metadata:
 
 ## 为一个应用开启/关闭
 
-如果namespace开启了注入，但是namespace下的某个应用需要关闭注入，可以为pod设置label  `sidecar.istio.io/inject="false"` 。
-
-相反，如果namespace关闭了注入，但是namespace下的某个应用需要开启注入，可以为pod设置label  `sidecar.istio.io/inject="true"` 。
+如果需要为某个应用单独设置，可以为pod设置label  `sidecar.istio.io/inject` ，值可以是 `true` 或者 `false` 。
 
 # 其他
 
