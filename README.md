@@ -43,4 +43,3 @@ metadata:
 - [ASM记录访问日志](./docs/access-log.md)
 - [APE集群升级ASM](./docs/APE-ASM-upgrade.md)
 - [限流](./docs/rate-limit.md)
-- [Ingress Gateway](./docs/ingressgateway.md)
