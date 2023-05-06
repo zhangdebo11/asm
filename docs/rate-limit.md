@@ -181,9 +181,6 @@ spec:
 
 ```
 
+# 参考资料
 
-curl test-nginx1.default.svc:1111
-curl test-nginx2.default.svc:2222
-kubectl exec -ti test-nginx3-5884877d5f-xmx66 -c nginx bash
-
-istio-proxy
+- https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/

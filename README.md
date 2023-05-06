@@ -22,6 +22,8 @@ metadata:
   namespace: istio-system
 ```
 
+更多配置 https://istio.io/latest/docs/reference/config/istio.mesh.v1alpha1/
+
 # 为应用开启ASM
 
 ## 为一个namespace开启
