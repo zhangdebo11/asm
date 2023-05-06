@@ -26,6 +26,16 @@ metadata:
 
 # 为应用开启ASM
 
+## 为一个namespace开启
+
+为namespace增加label `istio-injection=enabled` ，则该namespace下的pod在创建时会自动注入一个容器 `istio-proxy` 。
+
+## 为一个应用开启/关闭
+
+如果namespace开启了注入，但是namespace下的某个应用需要关闭注入，可以为pod设置label  `sidecar.istio.io/inject="false"` 。
+
+相反，如果namespace关闭了注入，但是namespace下的某个应用需要开启注入，可以为pod设置label  `sidecar.istio.io/inject="true"` 。
+
 # 如何为集群卸载ASM
 
 [uninstall.md](uninstall.md)

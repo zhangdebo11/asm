@@ -10,16 +10,27 @@ kubectl label namespace YOUR_NAMESPACE istio-injection-
 
 ## 移除hook
 
+```sh
 kubectl delete validatingwebhookconfiguration istiod-istio-system-mcp
 kubectl delete mutatingwebhookconfiguration RELEASE_CHANNEL
+```
 
 ## 删除相关命名空间
+
+```sh
 kubectl delete namespace istio-system asm-system --ignore-not-found=true
+```
 
 ## 删除相关CRD
+
+```sh
 kubectl get crd  | grep istio
+```
 
 ## 取消fleet注册
+
+```sh
 gcloud container fleet memberships unregister staging-manju-melonpan-cluster \
    --project=smartcart-stagingization \
    --gke-cluster=asia-northeast1/staging-manju-melonpan-cluster
+```
