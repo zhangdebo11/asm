@@ -1,0 +1,84 @@
+# 安装ASM
+
+集群要开启 VPC-native traffic routing
+集群的feature打开“Anthos service mesh”
+
+# 部署入口网关
+
+准备示例代码
+```
+git clone https://github.com/zhangdebo11/asm-test.git
+cd asm-test
+```
+
+创建namespace
+```
+kubectl apply -f samples/istio-ingressgateway/namespace.yaml
+```
+
+注意这个namespace带有label `istio.io/rev: asm-managed`
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    istio.io/rev: asm-managed
+  name: istio-gateway
+```
+
+部署ingressgateway。这个网关通过ingress对外暴露，并配置了GCP托管的证书。证书所签发的域名应包含此集群内所有需要对外暴露的服务域名，所有服务的访问流量均通过此网关。
+```
+kubectl apply -f samples/istio-ingressgateway/
+```
+
+
+# 部署示例应用
+
+首先创建namespace
+
+```
+kubectl apply -f samples/online-boutique/kubernetes-manifests/namespaces
+```
+
+注意，为namespace增加label  `istio-injection: enabled` ，那么在这个namespace下的pod会自动注入sidecar
+
+```sh
+kubectl label ns xxx istio-injection=enabled
+
+```
+
+创建应用资源
+
+```sh
+kubectl apply -f samples/online-boutique/kubernetes-manifests/deployments
+kubectl apply -f samples/online-boutique/kubernetes-manifests/services
+```
+
+# 通过ingressgateway访问示例应用
+https://test-asm-boutique.raicart.io
+
+# 卸载ASM
+
+## 取消sidecar注入
+
+```sh
+kubectl label namespace YOUR_NAMESPACE istio.io/rev-
+kubectl label namespace YOUR_NAMESPACE istio-injection-
+```
+重启pod后sidecar消失
+
+## 移除hook
+
+kubectl delete validatingwebhookconfiguration istiod-istio-system-mcp
+kubectl delete mutatingwebhookconfiguration RELEASE_CHANNEL
+
+## 删除相关命名空间
+kubectl delete namespace istio-system asm-system --ignore-not-found=true
+
+## 删除相关CRD
+kubectl get crd  | grep istio
+
+## 取消fleet注册
+gcloud container fleet memberships unregister staging-manju-melonpan-cluster \
+   --project=smartcart-stagingization \
+   --gke-cluster=asia-northeast1/staging-manju-melonpan-cluster
