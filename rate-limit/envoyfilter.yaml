@@ -44,7 +44,8 @@ spec:
         name: rate_limit_service
         type: STRICT_DNS 
   workloadSelector:
-    app: ratelimit-demo
+    labels:
+      app: ratelimit-demo
 
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -81,4 +82,5 @@ spec:
               descriptor_key: service
               header_name: x-service
   workloadSelector:
-    app: ratelimit-demo-app # label used to identify pods running your applications
+    labels:
+      app: ratelimit-demo-app # label used to identify pods running your applications
