@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: ratelimit-demo-app
+        sidecar.istio.io/inject: "true"
     spec:
       containers: 
       - image: nginx

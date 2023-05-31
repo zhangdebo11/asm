@@ -13,13 +13,13 @@ spec:
       listener:
         filterChain:
           filter:
-            name: envoy.http_connection_manager
+            name: envoy.filters.network.http_connection_manager
             subFilter:
-              name: envoy.router
+              name: envoy.filters.http.router
     patch:
       operation: INSERT_BEFORE
       value:
-        config:
+        typed_config:
           domain: example-ratelimit # must match domain in ratelimit ConfigMap
           failure_mode_deny: false # run plugin in fail-open mode, no limiting happens if ratelimit is unavailable           rate_limit_service:
           grpc_service: 
