@@ -32,7 +32,7 @@ spec:
   - applyTo: CLUSTER
     match:
       cluster:
-        service: ratelimit-demo-ratelimit
+        service: ratelimit
     patch:
       operation: ADD
       value:
@@ -43,7 +43,7 @@ spec:
             - endpoint:
                 address:
                   socket_address:
-                    address: ratelimit-demo-ratelimit # ratelimit Service name
+                    address: ratelimit # ratelimit Service name
                     port_value: 42081 # and port exposed by the Service
         # hosts:
         # - socket_address:
