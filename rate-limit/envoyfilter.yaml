@@ -27,7 +27,7 @@ spec:
             grpc_service: 
               envoy_grpc:
                 cluster_name: rate_limit_service
-                timeout: 0.25s
+                # timeout: 0.25s
         name: envoy.rate_limit
   - applyTo: CLUSTER
     match:
@@ -41,10 +41,10 @@ spec:
           endpoints:
           - lb_endpoints:
             - endpoint:
-              address:
-                socket_address:
-                  address: ratelimit-demo-ratelimit # ratelimit Service name
-                  port_value: 42081 # and port exposed by the Service
+                address:
+                  socket_address:
+                    address: ratelimit-demo-ratelimit # ratelimit Service name
+                    port_value: 42081 # and port exposed by the Service
         # hosts:
         # - socket_address:
         #     address: ratelimit-demo-ratelimit # ratelimit Service name
