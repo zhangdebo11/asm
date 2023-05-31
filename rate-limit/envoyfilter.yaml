@@ -20,6 +20,7 @@ spec:
       operation: INSERT_BEFORE
       value:
         typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
           domain: example-ratelimit # must match domain in ratelimit ConfigMap
           failure_mode_deny: false # run plugin in fail-open mode, no limiting happens if ratelimit is unavailable           rate_limit_service:
           grpc_service: 
