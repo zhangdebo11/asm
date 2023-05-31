@@ -55,7 +55,7 @@ spec:
         type: STRICT_DNS 
   workloadSelector:
     labels:
-      app: ratelimit-demo
+      app: ratelimit-demo-app
 
 ---
 apiVersion: networking.istio.io/v1alpha3
