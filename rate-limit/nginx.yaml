@@ -31,6 +31,7 @@ metadata:
     app: ratelimit-demo-app
   name: ratelimit-demo-app
 spec:
+  type: LoadBalancer
   ports:
   - name: nginx 
     port: 80
