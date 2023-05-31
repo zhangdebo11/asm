@@ -22,10 +22,10 @@ spec:
         config:
           domain: example-ratelimit # must match domain in ratelimit ConfigMap
           failure_mode_deny: false # run plugin in fail-open mode, no limiting happens if ratelimit is unavailable           rate_limit_service:
-            grpc_service: 
-              envoy_grpc:
-                cluster_name: rate_limit_service
-                timeout: 0.25s
+          grpc_service: 
+            envoy_grpc:
+              cluster_name: rate_limit_service
+              timeout: 0.25s
         name: envoy.rate_limit
   - applyTo: CLUSTER
     match:
