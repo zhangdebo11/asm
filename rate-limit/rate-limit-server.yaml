@@ -3,6 +3,55 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
+    app: ratelimit-demo-redis
+    component: redis
+  name: ratelimit-demo-redis-dep
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratelimit-demo-redis
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: ratelimit-demo-redis
+        component: redis
+    spec:
+      containers: 
+      - image: redis:6.0.6
+        imagePullPolicy: IfNotPresent
+        name: istio-ratelimit 
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 512Mi 
+          requests:
+            cpu: 200m
+            memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ratelimit-demo-redis
+  name: redis
+spec:
+  ports:
+  - name: redis 
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector: 
+    app: ratelimit-demo-redis 
+    component: redis
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
     app: ratelimit-demo-rl 
     component: istio-ratelimit
   name: ratelimit-demo-rl-dep
