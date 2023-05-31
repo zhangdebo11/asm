@@ -44,7 +44,7 @@ spec:
                 address:
                   socket_address:
                     address: ratelimit # ratelimit Service name
-                    port_value: 42081 # and port exposed by the Service
+                    port_value: 8081 # and port exposed by the Service
         # hosts:
         # - socket_address:
         #     address: ratelimit-demo-ratelimit # ratelimit Service name
