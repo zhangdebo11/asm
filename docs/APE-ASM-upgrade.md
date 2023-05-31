@@ -48,7 +48,8 @@ chmod  +x asmcli
 kubectl label namespace istio-system \
     istio-injection- istio.io/rev=asm-1172-1 \
     --overwrite
-kubectl -n istio-system rollout restart deploy istio-ingressgateway
+# 修改相关版本号
+kubectl -n istio-system edit deploy istio-ingressgateway 
 
 
 # 业务应用切换到新版本ASM，需要重建pod重新注入sidecar
@@ -56,6 +57,7 @@ kubectl label namespace spirytus \
     istio-injection- istio.io/rev=asm-1172-1 \
     --overwrite
 
+kubectl -n spirytus rollout restart deploy xxx
 
 
 # 删除旧版本的istio
