@@ -23,10 +23,11 @@ spec:
           "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
           domain: example-ratelimit # must match domain in ratelimit ConfigMap
           failure_mode_deny: false # run plugin in fail-open mode, no limiting happens if ratelimit is unavailable           rate_limit_service:
-          grpc_service: 
-            envoy_grpc:
-              cluster_name: rate_limit_service
-              timeout: 0.25s
+          rate_limit_service:
+            grpc_service: 
+              envoy_grpc:
+                cluster_name: rate_limit_service
+                timeout: 0.25s
         name: envoy.rate_limit
   - applyTo: CLUSTER
     match:
@@ -36,10 +37,18 @@ spec:
       operation: ADD
       value:
         connect_timeout: 0.25s
-        hosts:
-        - socket_address:
-            address: ratelimit-demo-ratelimit # ratelimit Service name
-            port_value: 42081 # and port exposed by the Service
+        load_assignment:
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+              address:
+                socket_address:
+                  address: ratelimit-demo-ratelimit # ratelimit Service name
+                  port_value: 42081 # and port exposed by the Service
+        # hosts:
+        # - socket_address:
+        #     address: ratelimit-demo-ratelimit # ratelimit Service name
+        #     port_value: 42081 # and port exposed by the Service
         http2_protocol_options: {}
         lb_policy: ROUND_ROBIN 
         name: rate_limit_service
