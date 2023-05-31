@@ -1,0 +1,39 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: ratelimit-demo-app
+  name: ratelimit-demo-app
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratelimit-demo-app
+  template:
+    metadata:
+      labels:
+        app: ratelimit-demo-app
+    spec:
+      containers: 
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: nginx
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ratelimit-demo-app
+  name: ratelimit-demo-app
+spec:
+  ports:
+  - name: nginx 
+    port: 80
+    protocol: TCP
+    targetPort: nginx
+  selector: 
+    app: ratelimit-demo-app

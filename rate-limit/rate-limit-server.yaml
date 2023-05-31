@@ -1,0 +1,94 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: ratelimit-demo-rl 
+    component: istio-ratelimit
+  name: ratelimit-demo-rl-dep
+spec:
+  selector:
+    matchLabels:
+      app: ratelimit-demo-rl
+      component: istio-ratelimit
+  template:
+    metadata:
+      labels:
+        app: ratelimit-demo-rl
+        component: istio-ratelimit
+    spec:
+      containers:
+      - command: 
+        - /bin/ratelimit 
+        env:
+        - name: REDIS_SOCKET_TYPE
+          value: tcp
+        - name: REDIS_URL
+          value: redis:6379 # points to the Service we've created above
+        - name: RUNTIME_ROOT
+          value: /data
+        - name: RUNTIME_SUBDIRECTORY
+          value: ratelimit 
+        - name: RUNTIME_IGNOREDOTFILES
+          value: "true"
+        - name: RUNTIME_WATCH_ROOT
+          value: "false"
+        image: envoyproxy/ratelimit:v1.4.0 # latest build from master at a time of writing of this document
+        name: istio-ratelimit
+        volumeMounts:
+        - mountPath: /data/ratelimit/config
+          name: config-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: ratelimit-demo-rl-cm
+        name: config-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  labels:
+    app: ratelimit-demo-rl
+  name: ratelimit-demo-ratelimit
+spec:
+  ports:
+  - name: ratelimit-app
+    port: 42080
+    protocol: TCP
+    targetPort: 8080
+  - name: ratelimit-app-grpc
+    port: 42081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: ratelimit-demo-rl
+    component: istio-ratelimit
+
+---
+apiVersion: v1
+data:
+  config.yaml: |
+    domain: example-ratelimit
+    descriptors:
+    - key: service
+      requests_per_unit: 10
+      unit: second
+    - key: header_match
+      rate_limit:
+        requests_per_unit: 20
+        unit: second
+      value: path
+    - key: header_match
+      value: get
+      descriptors: 
+      - key: service
+        value: boo 
+        rate_limit:
+          requests_per_unit: 3
+          unit: second
+kind: ConfigMap
+metadata:
+  labels:
+    app: ratelimit-demo-rl
+  name: ratelimit-demo-rl-cm
