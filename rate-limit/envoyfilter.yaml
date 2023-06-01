@@ -36,31 +36,16 @@ spec:
                   cluster_name: outbound|8081||ratelimit.default.svc.cluster.local
                   authority: ratelimit.default.svc.cluster.local
               transport_api_version: V3
-
----
-apiVersion: networking.istio.io/v1alpha3
-kind: EnvoyFilter
-metadata:
-  name: filter-ratelimit-svc
-spec:
-  workloadSelector:
-    labels:
-      app: ratelimit-demo-app
-  configPatches:
     - applyTo: VIRTUAL_HOST
       match:
         context: SIDECAR_INBOUND
-        routeConfiguration:
-          vhost:
-            name: ""
-            route:
-              action: ANY
       patch:
         operation: MERGE
         # Applies the rate limit rules.
         value:
           rate_limits:
             - actions: # any actions in here
+              # - remote_address: {}
               - request_headers:
                   header_name: ":path"
                   descriptor_key: "PATH"
