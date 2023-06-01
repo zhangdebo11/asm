@@ -50,7 +50,10 @@ spec:
                   descriptor_value: path
                   headers: 
                     - name: :path
-                      prefix_match: /
+                      # prefix_match: /
+                      safe_regex_match:
+                        google_re2: {}
+                        regex: "/aaa.*"
               - request_headers:
                   descriptor_key: kkk
                   header_name: aaa
