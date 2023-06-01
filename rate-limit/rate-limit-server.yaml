@@ -27,19 +27,34 @@ data:
   config.yaml: |
     domain: echo-ratelimit
     descriptors:
-      - key: remote_address
-        rate_limit:
-          unit: minute
-          requests_per_unit: 1
-      - key: PATH
-        value: "/"
-        rate_limit:
-          unit: minute
-          requests_per_unit: 2
-      - key: PATH
-        rate_limit:
-          unit: minute
-          requests_per_unit: 3
+      - key: header_match
+        value: path
+        descriptors:
+          - key: kkk
+            rate_limit:
+              requests_per_unit: 3
+              unit: minute
+
+
+      # - key: remote_address
+      #   rate_limit:
+      #     unit: minute
+      #     requests_per_unit: 1
+      # - key: AAA
+      #   value: "/"
+      #   rate_limit:
+      #     unit: minute
+      #     requests_per_unit: 2
+      # - key: AAA
+      #   rate_limit:
+      #     unit: minute
+      #     requests_per_unit: 3
+      # - key: AAA
+      #   value: "aaa"
+      #   rate_limit:
+      #     unit: minute
+      #     requests_per_unit: 4
+
 ##################################################################################################
 ---
 apiVersion: v1
