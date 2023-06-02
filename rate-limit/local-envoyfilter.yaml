@@ -1,0 +1,73 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: test-rate-limit
+spec:
+  workloadSelector:
+    # select by label in the same namespace
+    labels:
+      app: ratelimit-demo-app
+  configPatches:
+    - applyTo: HTTP_FILTER  # HTTP
+      match:
+        context: SIDECAR_INBOUND    # 入口流量
+        listener:
+          portNumber: 80   # 要限制的容器端口
+          filterChain:
+            filter:
+              name: "envoy.filters.network.http_connection_manager"     # HTTP
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.http.local_ratelimit
+          typed_config:
+            "@type": type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/envoy.extensions.filters.http.local_ratelimit.v3.LocalRateLimit
+            value:
+              stat_prefix: http_local_rate_limiter
+              token_bucket:
+                max_tokens: 2
+                tokens_per_fill: 2
+                fill_interval: 60s
+              filter_enabled:
+                runtime_key: local_rate_limit_enabled
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              filter_enforced:
+                runtime_key: local_rate_limit_enforced
+                default_value:
+                  numerator: 100
+                  denominator: HUNDRED
+              # descriptors:
+              #   - entries:
+              #     # - key: client_cluster
+              #     #   value: foo
+              #     - key: path
+              #       value: /aaa
+              #     token_bucket:
+              #       max_tokens: 2
+              #       tokens_per_fill: 2
+              #       fill_interval: 60s
+    # - applyTo: VIRTUAL_HOST
+    #   match:
+    #     context: SIDECAR_INBOUND
+    #   patch:
+    #     operation: MERGE
+    #     # Applies the rate limit rules.
+    #     value:
+    #       rate_limits:
+    #         - actions: # any actions in here
+    #           # - remote_address: {}
+    #           - header_value_match:
+    #               descriptor_value: path
+    #               headers: 
+    #                 - name: :path
+    #                   # prefix_match: /
+    #                   safe_regex_match:
+    #                     google_re2: {}
+    #                     regex: "/aaa.*"
+              # - request_headers:
+              #     descriptor_key: kkk
+              #     header_name: aaa
