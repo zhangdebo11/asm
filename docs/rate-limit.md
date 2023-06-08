@@ -1,14 +1,19 @@
-# 本地限流与全局限流
+# 1. 本地限流与全局限流
 
-## 本地限流
+## 1.1 本地限流
 
 ![image](../image/local-rate-limit.png)
 
-## 全局限流
+## 1.2 全局限流
 
 ![image](../image/global-rate-limit.png)
 
-# 限制入口流量
+# 2. Demo
+
+请参考目录 rate-limit-demo
+
+# 3. 其他
+## 3.1 限制入口流量
 
 以下实现了，当外部流量访问容器的 80 端口时，会被限流
 
@@ -100,7 +105,7 @@ spec:
 ```
 
 
-# 限制出口流量
+## 3.2 限制出口流量
 
 以下实现了，当容器访问外部的 1111 端口时，会被限流
 
@@ -191,7 +196,7 @@ spec:
 
 ```
 
-# 参考资料
+# 4. 参考资料
 
 - https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/
 - https://www.aboutwayfair.com/tech-innovation/understanding-envoy-rate-limits
