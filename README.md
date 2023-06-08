@@ -1,6 +1,6 @@
 # 为集群开启ASM
 
-集群要开启 VPC-native traffic routing，然后集群的feature打开“Anthos service mesh”
+集群的feature打开“Anthos service mesh”
 
 # 修改ASM配置
 
