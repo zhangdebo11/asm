@@ -1,3 +1,13 @@
+# 本地限流与全局限流
+
+## 本地限流
+
+![image](../image/local-rate-limit.png)
+
+## 全局限流
+
+![image](../image/global-rate-limit.png)
+
 # 限制入口流量
 
 以下实现了，当外部流量访问容器的 80 端口时，会被限流
@@ -184,3 +194,5 @@ spec:
 # 参考资料
 
 - https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/
+- https://www.aboutwayfair.com/tech-innovation/understanding-envoy-rate-limits
+- https://discuss.istio.io/t/envoy-local-rate-limit-by-ip-address-using-remote-address-not-working/12718
