@@ -34,6 +34,16 @@ metadata:
 
 如果需要为某个应用单独设置，可以为pod设置label  `sidecar.istio.io/inject` ，值可以是 `true` 或者 `false` 。
 
+# 开启后
+
+## 监控数据问题
+
+ASM开启后，发现yakiimo的API监控数据为空了，解决办法是把chart的filter从 "app.kubernetes.io/name=yakiimo" 改为 "pod_name=~yakiimo.*"。
+
+问题原因可能是ASM的开启导致了监控数据的变化。
+
+综上，开启ASM后请注意查看监控数据是否正常。
+
 # 其他
 
 - [为什么要修改ASM配置](./docs/problem.md)
