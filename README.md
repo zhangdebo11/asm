@@ -36,6 +36,18 @@ metadata:
 
 # 开启后
 
+## 维护mesh_id到terraform模板
+
+集群开启ASM后，集群会增加一个label `mesh_id`，把这个label增加到terraform模板中
+
+```yaml
+resource "google_container_cluster" "yakiimo" {
+  resource_labels = {
+    "mesh_id" = "proj-973347293934"
+  }
+}
+```
+
 ## 监控数据问题
 
 ASM开启后，发现yakiimo的API监控数据为空了，解决办法是把chart的filter从 "app.kubernetes.io/name=yakiimo" 改为 "pod_name=~yakiimo.*"。
