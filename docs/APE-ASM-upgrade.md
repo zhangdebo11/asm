@@ -70,7 +70,9 @@ kubectl -n istio-system delete deploy istiod-asm-1124-1
 kubectl -n istio-system delete hpa istiod-asm-1124-1 
 kubectl -n istio-system delete pdb istiod-asm-1124-1 
 kubectl -n istio-system delete IstioOperator installed-state-asm-1124-1 
-
+kubectl -n istio-system delete sa istiod-asm-1124-1
+kubectl -n istio-system delete role istiod-asm-1124-1
+kubectl -n istio-system delete rolebinding istiod-asm-1124-1
 
 ```
 
