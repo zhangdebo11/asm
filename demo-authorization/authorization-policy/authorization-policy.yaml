@@ -10,4 +10,12 @@ spec:
   rules:
   - to:
     - operation:
-        paths: ["/test/*", "*/info"]
+        paths:
+        - "/test/*"
+        methods:
+        - GET
+    - operation:
+        paths:
+        - "*/info"
+        methods:
+        - GET
