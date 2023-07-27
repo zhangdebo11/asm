@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-nginx
+  name: test-nginx
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-nginx
+  template:
+    metadata:
+      labels:
+        app: test-nginx
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers: 
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: nginx
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test-nginx
+  name: test-nginx
+spec:
+  # type: ClusterIP
+  type: LoadBalancer
+  ports:
+  - name: nginx 
+    port: 80
+    protocol: TCP
+    targetPort: nginx
+  selector: 
+    app: test-nginx

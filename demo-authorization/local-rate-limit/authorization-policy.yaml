@@ -1,0 +1,13 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: test-authorization-policy
+spec:
+  selector:
+    matchLabels:
+      app: test-nginx
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        paths: ["/test/*", "*/info"]
