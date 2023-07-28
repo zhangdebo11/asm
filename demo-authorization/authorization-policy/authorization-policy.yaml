@@ -19,3 +19,7 @@ spec:
         - "*/info"
         methods:
         - GET
+    when:
+    - key: request.headers[user-agent]
+      values:
+      - "GoogleStackdriverMonitoring-UptimeChecks(https://cloud.google.com/monitoring)"
