@@ -63,3 +63,4 @@ ASM开启后，发现yakiimo的API监控数据为空了，解决办法是把char
 - [ASM记录访问日志](./docs/access-log.md)
 - [APE集群升级ASM](./docs/APE-ASM-upgrade.md)
 - [限流](./docs/rate-limit.md)
+- [访问限制](./docs/authorization.md)

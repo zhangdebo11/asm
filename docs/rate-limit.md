@@ -19,7 +19,7 @@
 
 # 2. Demo
 
-请参考目录 rate-limit-demo
+请参考目录 demo-rate-limit
 
 # 3. 参考资料
 
