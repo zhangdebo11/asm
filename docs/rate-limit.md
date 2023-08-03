@@ -21,7 +21,23 @@
 
 请参考目录 demo-rate-limit
 
-# 3. 参考资料
+# 3. 现行方案
+
+采用全局限流：
+- 在每个集群中部署一套 `redis + rateLimitServer`，使用argoCD管理，helm在`manju-helm`工程中
+- 每个应用中增加`EnvoyFilter`资源，并设置开关
+
+设置限流后，redis中会保存访问数据
+
+![image](../image/ratelimit-redis.png)
+
+# 4. 相关问题
+
+设置限流后，留意ingress日志，如果出现大量的502错误，很可能是健康检查调用的接口限流数量太少，应适当提高数值。
+
+![image](../image/ratelimit-warnlog.png)
+
+# 5. 参考资料
 
 - https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/
 - https://www.aboutwayfair.com/tech-innovation/understanding-envoy-rate-limits
