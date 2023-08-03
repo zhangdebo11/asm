@@ -24,10 +24,10 @@
 # 3. 现行方案
 
 采用全局限流：
-- 在每个集群中部署一套 `redis + rateLimitServer`，使用argoCD管理，helm在`manju-helm`工程中
-- 每个应用中增加`EnvoyFilter`资源，并设置开关
-- 在`rateLimitServer`中，使用configmap维护限流规则，每个应用对应一个配置文件，每个配置文件开头定义一个`domain`
-- 在`EnvoyFilter`中，需要指定对应的`domain`
+- 在每个集群中部署一套 `redis + rateLimitServer`，使用argoCD管理，helm在`manju-helm`工程中。
+- 每个应用中增加`EnvoyFilter`资源，并设置开关。
+- 在`rateLimitServer`中，使用configmap维护限流规则，每个应用对应一个配置文件，每个配置文件开头定义一个`domain`。例如，`manju`对应的配置文件是`config-manju.yaml`，定义的`domain`是`raicart-manju`。
+- 在`EnvoyFilter`中，需要指定对应的`domain`，例如，`manju`需要指定`domain`为`raicart-manju`。
 
 设置限流后，redis中会保存访问数据
 
