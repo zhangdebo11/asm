@@ -8,5 +8,7 @@ AuthorizationPolicy是istio中用来限制访问的，可以设置黑名单和�
 - 健康检查所用的API
 - prometheus监控调用的API，即`/metrics`
 
+设置后请留意ingress状态是否正常，留意端口监控的数据是否正常。
+
 # 参考资料
 https://istio.io/latest/docs/concepts/security/#authorization
