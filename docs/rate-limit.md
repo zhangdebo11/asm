@@ -44,3 +44,4 @@
 - https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/
 - https://www.aboutwayfair.com/tech-innovation/understanding-envoy-rate-limits
 - https://discuss.istio.io/t/envoy-local-rate-limit-by-ip-address-using-remote-address-not-working/12718
+- https://github.com/envoyproxy/ratelimit
