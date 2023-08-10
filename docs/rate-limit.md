@@ -34,7 +34,7 @@
 
 ![image](../image/ratelimit-redis.png)
 
-# 5. 参考资料
+# 4. 参考资料
 
 - https://istio.io/latest/docs/tasks/policy-enforcement/rate-limit/
 - https://www.aboutwayfair.com/tech-innovation/understanding-envoy-rate-limits
