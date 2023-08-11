@@ -23,16 +23,24 @@
 
 # 3. 现行方案
 
-采用全局限流：
-- 在每个集群中部署一套 `redis + rateLimitServer`，使用argoCD管理，helm在`manju-helm`工程中。
-- 每个应用中增加`EnvoyFilter`资源，并设置开关。
-- 在`rateLimitServer`中，使用configmap维护限流规则，每个应用对应一个配置文件，每个配置文件开头定义一个`domain`。例如，`manju`对应的配置文件是`config-manju.yaml`，定义的`domain`是`raicart-manju`。
-- 在`EnvoyFilter`中，需要指定对应的`domain`，例如，`manju`需要指定`domain`为`raicart-manju`。
-- `/`，`/ping`，`/metrics` 接口在armor层做限流，不在ASM中做。
+采用全局限流。
 
-设置限流后，redis中会保存访问数据
+## 3.1 限流服务
+
+限流服务由一个 rateLimitServer 服务和 redis 服务组成，redis可以使用我们自己部署的redis集群，rateLimitServer则需要连接redis记录访问次数。
 
 ![image](../image/ratelimit-redis.png)
+
+rateLimitServer 使用argoCD管理，helm模板保存在`manju-helm`工程中。rateLimitServer连接redis的信息保存在其环境变量中。
+
+## 3.2 限流规则管理
+
+限流规则管理分成两部分：
+
+- 第一部分是rateLimitServer的配置文件，它以configmap的形式挂载在pod中。为了便于管理，我们把限流规则分组成不同的domain，比如，manju的规则都在`raicart-manju`这个domain中，gulab的规则都在`raicart-gulab`这个domain中。
+- 第二部分是EnvoyFilter资源，每个应用对应一个EnvoyFilter资源，EnvoyFilter需要指定对应的工作负载以及对应的domain。
+
+注意：`/`，`/ping`，`/metrics` 接口在armor层做限流，不在ASM中。
 
 # 4. 参考资料
 
